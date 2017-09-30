@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://121.42.171.28:3306/dev_db01
+    username: dev_investrw
+    password: ENC(AyMqfrdCVVTxW04J+8xsbejxj8sME/Lg)
+
+jasypt:
+  encryptor:
+    password: duanrong123
+server:
+  port: 8080
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    cache-enabled: false
+
