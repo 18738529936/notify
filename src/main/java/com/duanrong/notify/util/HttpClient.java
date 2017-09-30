@@ -1,20 +1,15 @@
 package com.duanrong.notify.util;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,7 +65,7 @@ public class HttpClient {
             logger.error("发送http请求失败", e);
             throw e;
         } finally {
-            if(httpsClient!=null)
+            if (httpsClient != null)
                 httpsClient.close();
         }
         return result;
@@ -100,7 +95,7 @@ public class HttpClient {
             logger.error("发送http请求失败", e);
             throw e;
         } finally {
-            if(httpsClient!=null)
+            if (httpsClient != null)
                 httpsClient.close();
         }
         return result;
@@ -133,41 +128,14 @@ public class HttpClient {
             }
             logger.info("HTTPS========POST======JSON，httpEntity：{}", entity.toString());
             httpStr = EntityUtils.toString(entity, DEFAULT_CHARSET);
-        } catch(Exception e){
-        	e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (response != null) {
                 EntityUtils.consume(response.getEntity());
             }
         }
         return httpStr;
-    }
-
-    public static CloseableHttpClient createClientDefault() {
-        return HttpClients.createDefault();
-    }
-
-    public static String sendHTTPRequestPostToString(String url, Header[] headers, List<NameValuePair> params, String encoding) throws IOException {
-        HttpPost post = new HttpPost(url);
-        post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-        return sendHTTPRequestToString(createClientDefault(), post, headers, encoding);
-    }
-
-    private static String sendHTTPRequestToString(CloseableHttpClient httpClient, HttpRequestBase method, Header[] headers, String encoding) throws IOException {
-        String var8;
-        try {
-            method.setConfig(requestConfig);
-            method.setProtocolVersion(HttpVersion.HTTP_1_0);
-            method.setHeader("Connection", "Close");
-            method.setHeaders(headers);
-            HttpResponse response = httpClient.execute(method);
-            HttpEntity entity = response.getEntity();
-            String result = EntityUtils.toString(entity, encoding);
-            var8 = result;
-        } finally {
-            httpClient.close();
-        }
-        return var8;
     }
 
 }

@@ -167,7 +167,7 @@ public class SMSSend {
     }
 
     /**
-     * 发送短信
+     * 创蓝短信发送
      *
      * @param mobile
      * @param msg
@@ -176,7 +176,6 @@ public class SMSSend {
      * @param extno
      * @version 1.0
      */
-    // TODO 创蓝短信发送
     private static void sendSM(String account, String pswd, String mobile, String msg,
                                boolean needstatus, String product, String extno) throws IOException {
         List<NameValuePair> params = new ArrayList<>();
@@ -195,6 +194,7 @@ public class SMSSend {
 
     /**
      * 卓越恒信短信发送
+     *
      * @param serviceUrl
      * @param key
      * @param account
@@ -206,13 +206,12 @@ public class SMSSend {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("account", Integer.toString(account)));
         params.add(new BasicNameValuePair("mobile", mobile));
-//        content = URLEncoder.encode(content, "UTF-8");
         params.add(new BasicNameValuePair("content", content));
+        content = URLEncoder.encode(content, "UTF-8");
         String str = "account=" + account + "&content=" + content + "&mobile=" + mobile + key;
         String sign = HashCrypt.getDigestHash(str, "MD5");
         params.add(new BasicNameValuePair("sign", sign));
-        String result = HttpClient.sendHTTPRequestPostToString(serviceUrl, new BasicHeader[0], params, "UTF-8");
-
+        String result = DRHTTPClient.sendHTTPRequestPostToString(serviceUrl, new BasicHeader[0], params, "UTF-8");
         System.out.println(result);
         Log log = new Log();
         log.infoLog("短信发送记录，手机号：" + mobile, "响应结果：" + result + "，内容：" + URLDecoder.decode(content, "UTF-8"));
